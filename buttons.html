@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+	<title>Motor Control</title>
+	
+	<style>
+		.buttons {
+			margin: -5px;
+		}
+		.buttons > div {
+			padding: 5px;
+		}
+		.buttons .btn {
+			font-size: 3rem;
+			width: 100%;
+		}
+		.buttons .btn:active i {
+			color: #F09;
+			animation: glow 1s ease-in-out infinite alternate;
+		}
+
+		@-webkit-keyframes glow {
+			from {
+				text-shadow: 0 0 10px #F09;
+			}
+			to {
+				text-shadow: 0 0 20px #F09;
+			}
+		}
+
+	</style>
+  </head>
+  <body>
+	<div class="container">
+		<h1>Pin Control</h1>
+		<div class="buttons row">
+			<div class="col-lg-2 col-md-4">
+				<button type="button" pin="1" class="btn btn-dark">
+					A1 <i class="fas fa-lightbulb"></i>
+				</button>
+			</div>
+			<div class="col-lg-2 col-md-4">
+				<button type="button" pin="2" class="btn btn-dark">
+					A2 <i class="fas fa-lightbulb"></i>
+				</button>
+			</div>
+			<div class="col-lg-2 col-md-4">
+				<button type="button" pin="3" class="btn btn-dark">
+					A3 <i class="fas fa-lightbulb"></i>
+				</button>
+			</div>
+			<div class="col-lg-2 col-md-4">
+				<button type="button" pin="4" class="btn btn-dark">
+					A4 <i class="fas fa-lightbulb"></i>
+				</button>
+			</div>
+			<div class="col-lg-2 col-md-4">
+				<button type="button" pin="5" class="btn btn-dark">
+					A5 <i class="fas fa-lightbulb"></i>
+				</button>
+			</div>
+			<div class="col-lg-2 col-md-4">
+				<button type="button" pin="6" class="btn btn-dark">
+					A6 <i class="fas fa-lightbulb"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script>
+		document.querySelectorAll(".buttons .btn").forEach(btn => {
+			let pin = btn.getAttribute("pin")
+			btn.addEventListener("mousedown", () => {
+				fetch(`http://192.168.1.230/${pin}/1`, {method: 'POST'}).then(resp => resp.json())
+			})
+			btn.addEventListener("mouseup", () => {
+				fetch(`http://192.168.1.230/${pin}/0`, {method: 'POST'}).then(resp => resp.json())
+			})
+		})
+	</script>
+  </body>
+</html>
