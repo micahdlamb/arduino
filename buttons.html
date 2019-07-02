@@ -13,10 +13,10 @@
 	
 	<style>
 		.buttons {
-			margin: -5px;
+			margin: -3px;
 		}
 		.buttons > div {
-			padding: 5px;
+			padding: 3px;
 		}
 		.buttons .btn {
 			font-size: 3rem;
@@ -83,12 +83,14 @@
 	<script>
 		document.querySelectorAll(".buttons .btn").forEach(btn => {
 			let pin = btn.getAttribute("pin")
-			btn.addEventListener("mousedown", () => {
-				fetch(`http://192.168.1.230/${pin}/1`, {method: 'POST'}).then(resp => resp.json())
-			})
-			btn.addEventListener("mouseup", () => {
-				fetch(`http://192.168.1.230/${pin}/0`, {method: 'POST'}).then(resp => resp.json())
-			})
+			let turnOn  = () => fetch(`http://192.168.1.230/${pin}/1`, {method: 'POST'})
+			let turnOff = () => fetch(`http://192.168.1.230/${pin}/0`, {method: 'POST'})
+
+			btn.addEventListener("mousedown", turnOn)
+			btn.addEventListener("touchstart", turnOn)
+
+			btn.addEventListener("mouseup", turnOff)
+			btn.addEventListener("touchend", turnOff)
 		})
 	</script>
   </body>
