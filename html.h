@@ -1,4 +1,4 @@
-char* html = "<!doctype html>\n"
+char buttons_html[] = "<!doctype html>\n"
 "<html lang=\"en\">\n"
 "  <head>\n"
 "\t<!-- Required meta tags -->\n"

@@ -18,8 +18,7 @@
 
 #include <SPI.h>
 #include <WiFiNINA.h>
-
-int speed = 0;
+#include "html.h"
 
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
 char ssid[] = "Orion";       // your network SSID (name)
@@ -64,7 +63,7 @@ void setup() {
     status = WiFi.begin(ssid, pass);
 
     // wait 10 seconds for connection:
-    delay(10000);
+    //delay(10000);
   }
   server.begin();
   // you're connected now, so print out the status:
@@ -100,29 +99,53 @@ void handleRequest(){
 //    }
   }
 
-  if (header.startsWith("POST")){
-    int slash1 = 5;
-    int slash2 = header.indexOf('/', slash1+1);
-    int end = header.indexOf('\r', slash2);
-    
-    int pin = header.substring(slash1+1, slash2).toInt();
-    int value = header.substring(slash2+1,end).toInt();
-    digitalWrite(pin, value);
+  int start=0;
+  String method = split(header, ' ',  start);
+  String path   = split(header, ' ', start);
 
-    client.println("HTTP/1.1 200 OK");
-    client.println("Access-Control-Allow-Origin: *\r\n");
-    client.print("\"pin " + String(pin) + " set to " + String(value) + "\"");
+  if (method == "POST"){
+    int start=1;
+    int pin   = split(path, '/', start).toInt();
+    int value = path.substring(start).toInt();
+    digitalWrite(pin, value);
+    send200(client, "\"pin " + String(pin) + " set to " + String(value) + "\"");
   }
-  else if (header.startsWith("GET /")){
-    client.println("HTTP/1.1 200 OK\r\n");
-    #include "buttons_html.c"
-    client.print(html);
+  else if (path == "/pins"){
+    send200(client, "[" +
+      String(digitalRead(1)) + "," +
+      String(digitalRead(2)) + "," +
+      String(digitalRead(3)) + "," +
+      String(digitalRead(4)) + "," +
+      String(digitalRead(5)) + "," +
+      String(digitalRead(6)) + "," +
+    "]");
+  }
+  else if (path == "/"){
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-Length: " + String(sizeof(buttons_html)-1));
+    client.println();
+    client.print(buttons_html);
   }
   else
     client.print("HTTP/1.1 404 Not Found");
 
-  client.stop();
-  Serial.println("client disconnected");
+  //client.stop();
+  //Serial.println("client disconnected");
+}
+
+String send200(WiFiClient& client, const String& body){
+    client.println("HTTP/1.1 200 OK");
+    client.println("Access-Control-Allow-Origin: *");
+    client.println("Content-Length: " + String(body.length()));
+    client.println();
+    client.print(body);
+}
+
+String split(const String& string, char delim, int& start){
+    int end = string.indexOf(delim, start);
+    String tok = string.substring(start, end);
+    start = end+1;
+    return tok;
 }
 
 void printWifiStatus() {
