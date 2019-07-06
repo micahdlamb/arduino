@@ -20,6 +20,7 @@
 #include <WiFiNINA.h>
 #include "html.h"
 
+
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
 char ssid[] = "Orion";       // your network SSID (name)
 char pass[] = "3710flora";   // your network password (use for WPA, or use as key for WEP)
@@ -74,78 +75,69 @@ void loop() {
   handleRequest();
 }
 
+int i;
+char buf[1024];
+char msg[64];
+char contentLength[32] = "Content-Length: ";
+
 void handleRequest(){
   // listen for incoming clients
   WiFiClient client = server.available();
   if (!client) return;
 
-  String header = "";
-  String body = "";
+  i = 0;
   while (client.connected()) {
     char c = client.read();
     Serial.write(c);
-    header += c;
-    if (header.endsWith("\r\n\r\n"))
+    buf[i++] = c;
+    // Reading past first line isn't necessary if closing connection
+    if (strncmp(&buf[i-4], "\r\n\r\n", 4) == 0)
       break;
-//    if (header.endsWith("\r\n\r\n")){
-//      if (header.startsWith("POST"){
-//        while (client.available()){
-//          c = client.read();
-//          Serial.write(c):
-//          body += c;
-//        }
-//        break;
-//      }
-//    }
   }
 
-  int start=0;
-  String method = split(header, ' ',  start);
-  String path   = split(header, ' ', start);
+  char* method = strtok(buf, " ");
+  char* path   = strtok(NULL, " ");
 
-  if (method == "POST"){
-    int start=1;
-    int pin   = split(path, '/', start).toInt();
-    int value = path.substring(start).toInt();
-    digitalWrite(pin, value);
-    send200(client, "\"pin " + String(pin) + " set to " + String(value) + "\"");
+  Serial.print("method: "); Serial.println(method);
+  Serial.print("path:   "); Serial.println(path);
+
+  if (strcmp(method, "POST") == 0){
+    char* pin   = strtok(&path[1], "/");
+    char* value = strtok(NULL, " ");
+    digitalWrite(atoi(pin), atoi(value));
+
+    int len = sprintf(msg, "pin %s set to %s", pin, value);
+    send200(client, msg, len);
   }
-  else if (path == "/pins"){
-    send200(client, "[" +
-      String(digitalRead(1)) + "," +
-      String(digitalRead(2)) + "," +
-      String(digitalRead(3)) + "," +
-      String(digitalRead(4)) + "," +
-      String(digitalRead(5)) + "," +
-      String(digitalRead(6)) + "," +
-    "]");
+  else if (strcmp(path, "/pins") == 0){
+    int len = sprintf(msg, "[%d,%d,%d,%d,%d,%d]", digitalRead(1), digitalRead(2), digitalRead(3), digitalRead(4), digitalRead(5), digitalRead(6));
+    send200(client, msg, len);
   }
-  else if (path == "/"){
+  else if (strcmp(path, "/") == 0){
     client.println("HTTP/1.1 200 OK");
-    client.println("Content-Length: " + String(sizeof(buttons_html)-1));
+    itoa(sizeof(buttons_html)-1, &contentLength[16], 10);
+    client.println(contentLength);
     client.println();
     client.print(buttons_html);
   }
-  else
+  else {
     client.print("HTTP/1.1 404 Not Found");
+    client.stop();
+  }
 
-  //client.stop();
-  //Serial.println("client disconnected");
+  // Content-Length not needed if stopping connection
+  // Ideally connections could be reused? But seems to cause arduino to stop working after a while.
+  client.stop();
+  Serial.println("client disconnected");
 }
 
-String send200(WiFiClient& client, const String& body){
+void send200(WiFiClient& client, char* body, int len){
     client.println("HTTP/1.1 200 OK");
     client.println("Access-Control-Allow-Origin: *");
-    client.println("Content-Length: " + String(body.length()));
+    itoa(len, &contentLength[16], 10);
+    client.println(contentLength);
     client.println();
     client.print(body);
-}
-
-String split(const String& string, char delim, int& start){
-    int end = string.indexOf(delim, start);
-    String tok = string.substring(start, end);
-    start = end+1;
-    return tok;
 }
 
 void printWifiStatus() {
