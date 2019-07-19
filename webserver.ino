@@ -31,12 +31,12 @@ int status = WL_IDLE_STATUS;
 WiFiServer server(80);
 
 void setup() {
-  pinMode(1, OUTPUT);
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
+  pinMode(0, INPUT_PULLDOWN);
+  pinMode(1, INPUT_PULLDOWN);
+  pinMode(2, INPUT_PULLDOWN);
+  pinMode(3, INPUT_PULLDOWN);
+  pinMode(4, INPUT_PULLDOWN);
+  pinMode(5, INPUT_PULLDOWN);
   
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
@@ -110,7 +110,7 @@ void handleRequest(){
     send200(client, msg, len);
   }
   else if (strcmp(path, "/pins") == 0){
-    int len = sprintf(msg, "[%d,%d,%d,%d,%d,%d]", digitalRead(1), digitalRead(2), digitalRead(3), digitalRead(4), digitalRead(5), digitalRead(6));
+    int len = sprintf(msg, "[%d,%d,%d,%d,%d,%d]", digitalRead(0), digitalRead(1), digitalRead(2), digitalRead(3), digitalRead(4), digitalRead(5));
     send200(client, msg, len);
   }
   else if (strcmp(path, "/") == 0){
