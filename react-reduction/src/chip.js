@@ -3,7 +3,10 @@ let valuesPromise
 
 export async function readPin(pin){
     if (!valuesPromise){
-        valuesPromise = fetch('http://192.168.1.230/pins').then(res => res.json())
+        let ip = localStorage.getItem('chip-ip')
+        if (!ip) return 0
+        //192.168.1.230
+        valuesPromise = fetch(`http://${ip}/pins`).then(res => res.json())
         //valuesPromise = mockValues()
         valuesPromise.then(() => valuesPromise = null)
     }

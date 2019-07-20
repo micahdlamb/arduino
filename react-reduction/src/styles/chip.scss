@@ -1,0 +1,30 @@
+.blink-alert {
+    color: #F09;
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.blink-alert-glow {
+    animation: blinker-glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes blinker-glow {
+    from {
+        box-shadow: 0 0 5px #F09;
+    }
+    to {
+        box-shadow: 0 0 20px #F09;
+    }
+}
+
+.cr-header {
+    justify-content: space-between;
+}
+.cr-header__nav-right {
+    margin-left: unset;
+}

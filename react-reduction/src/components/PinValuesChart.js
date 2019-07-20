@@ -8,7 +8,7 @@ import {FaPause, FaPlay} from 'react-icons/fa';
 
 import * as chip from 'chip';
 
-const PinValues = ({ title, datasets, options, history, freq, ...restProps }) => {
+const PinValuesChart = ({ title, datasets, options, history, freq, ...restProps }) => {
   const chart = useRef(null);
 
   let [pause, setPause] = useState(false)
@@ -19,12 +19,12 @@ const PinValues = ({ title, datasets, options, history, freq, ...restProps }) =>
       await Promise.all(datasets.map(async curve => {
         let value = await chip.readPin(curve.pin)
         curve.data.push(value)
-        if (curve.data.length > history*freq)
+        if (curve.data.length > history)
           curve.data.shift()
       }))
 
       labels.push(Date.now())
-      if (labels.length > history*freq)
+      if (labels.length > history)
         labels.shift()
 
       chart.current.chartInstance.update()
@@ -56,16 +56,16 @@ const PinValues = ({ title, datasets, options, history, freq, ...restProps }) =>
   );
 };
 
-PinValues.propTypes = {
-  title: PropTypes.string,
+PinValuesChart.propTypes = {
+  title: PropTypes.node,
   datasets: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.number,
   freq: PropTypes.number
 };
 
-PinValues.defaultProps = {
-  history: 30,
+PinValuesChart.defaultProps = {
+  history: 10,
   freq: 1
 };
 
-export default React.memo(PinValues);
+export default React.memo(PinValuesChart);

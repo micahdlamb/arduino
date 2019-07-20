@@ -7,6 +7,7 @@ import React from 'react';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
+import './styles/chip.scss'
 import { connect } from 'react-redux';
 
 const ChillersPage = React.lazy(() => import('pages/ChillersPage'));
