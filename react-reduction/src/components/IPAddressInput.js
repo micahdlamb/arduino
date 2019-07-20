@@ -17,9 +17,8 @@ const IPAddressInput = () => {
       <Input
         value={value}
         onChange={event => setValue(event.target.value)}
-        placeholder="Enter Arduino's IP Address"
+        placeholder="Enter Chip's IP Address"
         onBlur={event => valid && localStorage.setItem('chip-ip', value)}
-        size={21}
       />
       <InputGroupAddon addonType="append">
         <InputGroupText>

@@ -1,8 +1,30 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-function rootReducer(state = {}, action) {
+const initialState = {
+  user: null,
+  notifications: [],
+  unconfirmedNotifications: 0
+}
+
+function rootReducer(state=initialState, action) {
     let {type, ...newState} = action
+    switch (type){
+      case 'notify':
+        let {notifications, unconfirmedNotifications} = state
+        let {notification} = newState
+        notification.date = new Date()
+        let maxNotifications = Math.max(unconfirmedNotifications, 4)
+        newState = {
+          notifications: [...notifications.slice(-maxNotifications), notification],
+          unconfirmedNotifications: unconfirmedNotifications + 1
+        }
+        break
+
+      case 'confirm-notifications':
+        newState = {unconfirmedNotifications: 0}
+        break
+    }
     return {...state, ...newState}
 }
 

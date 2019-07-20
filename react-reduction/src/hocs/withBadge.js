@@ -52,7 +52,7 @@ const withBadge = ({
   style = {},
   className,
   ...restBadgeProps
-} = {}) => WrappedComponent => ({ tag: Tag = 'div', ...restProps }) => {
+} = {}) => WrappedComponent => ({ tag: Tag = 'div', children, ...restProps }) => {
   return (
     <Tag className="d-inline-block position-relative">
       <WrappedComponent {...restProps} />
@@ -66,7 +66,9 @@ const withBadge = ({
           ...style,
         }}
         {...restBadgeProps}
-      />
+      >
+        {children}
+      </Badge>
     </Tag>
   );
 };

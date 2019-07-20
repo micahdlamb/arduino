@@ -3,9 +3,11 @@ import { UserCard } from 'components/Card';
 import Notifications from 'components/Notifications';
 import SearchInput from 'components/SearchInput';
 import IPAddressInput from 'components/IPAddressInput'
-import { notificationsData } from 'demos/header';
+//import { notificationsData } from 'demos/header';
 import withBadge from 'hocs/withBadge';
 import React from 'react';
+import { connect } from 'react-redux';
+import {confirmNotifications} from 'actions';
 import {
   MdClearAll,
   MdExitToApp,
@@ -49,7 +51,6 @@ const MdNotificationsActiveWithBadge = withBadge({
 class Header extends React.Component {
   state = {
     isOpenNotificationPopover: false,
-    isNotificationConfirmed: false,
     isOpenUserCardPopover: false,
   };
 
@@ -58,8 +59,8 @@ class Header extends React.Component {
       isOpenNotificationPopover: !this.state.isOpenNotificationPopover,
     });
 
-    if (!this.state.isNotificationConfirmed) {
-      this.setState({ isNotificationConfirmed: true });
+    if (this.props.unconfirmedNotifications) {
+      this.props.confirmNotifications()
     }
   };
 
@@ -77,7 +78,7 @@ class Header extends React.Component {
   };
 
   render() {
-    const { isNotificationConfirmed } = this.state;
+    const { notifications, unconfirmedNotifications } = this.props;
 
     return (
       <Navbar light expand className={bem.b('bg-white')}>
@@ -98,10 +99,9 @@ class Header extends React.Component {
         </Nav>
         
         <Nav navbar className={bem.e('nav-right')}>
-          {/*
           <NavItem className="d-inline-flex">
             <NavLink id="Popover1" className="position-relative">
-              {isNotificationConfirmed ? (
+              {!unconfirmedNotifications ? (
                 <MdNotificationsNone
                   size={25}
                   className="text-secondary can-click"
@@ -112,7 +112,9 @@ class Header extends React.Component {
                   size={25}
                   className="text-secondary can-click animated swing infinite"
                   onClick={this.toggleNotificationPopover}
-                />
+                >
+                  {unconfirmedNotifications}
+                </MdNotificationsActiveWithBadge>
               )}
             </NavLink>
             <Popover
@@ -122,11 +124,11 @@ class Header extends React.Component {
               target="Popover1"
             >
               <PopoverBody>
-                <Notifications notificationsData={notificationsData} />
+                <Notifications notificationsData={notifications} />
               </PopoverBody>
             </Popover>
           </NavItem>
-          */}
+
           <NavItem>
             <NavLink id="Popover2">
               <Avatar
@@ -181,4 +183,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default connect(({ notifications, unconfirmedNotifications }) => ({ notifications, unconfirmedNotifications }), { confirmNotifications })(Header);

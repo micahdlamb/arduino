@@ -2,8 +2,11 @@ import React from 'react';
 import Page from 'components/Page';
 import { Row, Col } from 'reactstrap';
 import { getColor } from 'utils/colors';
+import hotIcon from 'assets/img/hot.png';
 import PinValuesChart from 'components/PinValuesChart';
 import ReadPinValue from 'components/ReadPinValue';
+import { connect } from 'react-redux';
+import {notify} from 'actions';
 
 let options = {
   scales: {
@@ -54,7 +57,19 @@ let pressureCurves = [
   }
 ]
 
-const ChillersPage = () => {
+const ChillersPage = ({notify}) => {
+
+  let temperature = value => {
+    let alert = value > .5
+    if (alert)
+      notify({
+        avatar: hotIcon,
+        message: 'Chiller got hot',
+      })
+  
+    return <span className={alert && 'blink-alert' || null}>Temperature <strong>{value}</strong> °C</span>
+  }
+
   return (
     <Page title="Chillers">
       <Row>
@@ -69,9 +84,5 @@ const ChillersPage = () => {
   );
 };
 
-function temperature(value){
-  let alert = value > .5
-  return <span className={alert && 'blink-alert' || null}>Temperature <strong>{value}</strong> °C</span>
-}
 
-export default ChillersPage;
+export default connect(({}) => ({}), { notify })(ChillersPage);
