@@ -1,18 +1,26 @@
-.blink-alert {
-    color: #F09;
-    animation: blinker 1s linear infinite;
+.warn-text {
+    color: red;
+    animation: blinker-text 1s linear infinite;
 }
-
-@keyframes blinker {
+@keyframes blinker-text {
     50% {
         opacity: 0;
+    }
+}
+
+.warn-page {
+    animation: blinker-page 2s ease-in-out infinite;
+}
+@keyframes blinker-page {
+    50% {
+        background-color: #F44;
+        box-shadow: 0 0 20px #F44;
     }
 }
 
 .blink-alert-glow {
     animation: blinker-glow 1s ease-in-out infinite alternate;
 }
-
 @keyframes blinker-glow {
     from {
         box-shadow: 0 0 5px #F09;
@@ -22,9 +30,17 @@
     }
 }
 
+
+// Overrides 
+
 .cr-header {
     justify-content: space-between;
+    &__nav-right {
+        margin-left: unset;
+    }
+
+    margin-bottom: 0;
 }
-.cr-header__nav-right {
-    margin-left: unset;
+.cr-page {
+    padding-top: .5rem;
 }

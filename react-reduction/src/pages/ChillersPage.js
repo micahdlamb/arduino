@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Page from 'components/Page';
 import { Row, Col } from 'reactstrap';
 import { getColor } from 'utils/colors';
@@ -30,7 +30,7 @@ let temperatureCurves = [
   },
   {
     label: 'Chiller 2',
-    pin: 2,
+    pin: "A1",
     backgroundColor: getColor('secondary'),
     borderColor: getColor('secondary'),
     borderWidth: 2,
@@ -60,21 +60,29 @@ let pressureCurves = [
 const ChillersPage = ({notify}) => {
 
   let temperature = value => {
-    let alert = value > .5
+    let alert = value > .5 || null
+    setAlert(alert)
     if (alert)
       notify({
         avatar: hotIcon,
         message: 'Chiller got hot',
       })
   
-    return <span className={alert && 'blink-alert' || null}>Temperature <strong>{value}</strong> °C</span>
+    return <span className={alert && 'warn-text'}>Temperature <strong>{value}</strong> °C</span>
   }
 
+  let [alert, setAlert] = useState(null)
+
   return (
-    <Page title="Chillers">
+    <Page title="Chillers" className={alert && 'warn-page'}>
       <Row>
         <Col xl={6} lg={12} md={12}>
-          <PinValuesChart title={<ReadPinValue pin={1} render={temperature}/>} datasets={temperatureCurves} options={options} freq={1}/>
+          <PinValuesChart
+            title={<ReadPinValue pin={1} render={temperature}/>}
+            datasets={temperatureCurves}
+            options={options}
+            freq={1}
+        />
         </Col>
         <Col xl={6} lg={12} md={12}>
           <PinValuesChart title="Pressure" datasets={pressureCurves} options={options} freq={1}/>
