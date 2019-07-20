@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import * as chip from 'chip';
 
 const ReadPinValue = ({pin, render, freq }) => {
-
-  const [value, setValue] = useState(0);
+  
+  let [node, setNode] = useState(null)
 
   useEffect(() => {
     let id = setInterval(async () => {
-      setValue(await chip.readPin(pin))
+      setNode(render(await chip.readPin(pin)))
     }, 1000/freq)
 
     return () => {
@@ -17,7 +17,7 @@ const ReadPinValue = ({pin, render, freq }) => {
     }
   }, [freq])
 
-  return render(value)
+  return node
 };
 
 ReadPinValue.propTypes = {
