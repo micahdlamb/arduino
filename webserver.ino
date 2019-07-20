@@ -76,8 +76,8 @@ void loop() {
 }
 
 int i;
-char buf[1024];
-char msg[64];
+char buf[512];
+char msg[128];
 char contentLength[32] = "Content-Length: ";
 
 void handleRequest(){
@@ -110,7 +110,9 @@ void handleRequest(){
     send200(client, msg, len);
   }
   else if (strcmp(path, "/pins") == 0){
-    int len = sprintf(msg, "[%d,%d,%d,%d,%d,%d]", digitalRead(0), digitalRead(1), digitalRead(2), digitalRead(3), digitalRead(4), digitalRead(5));
+    //int len = sprintf(msg, "[%d,%d,%d,%d,%d,%d,%d,%d]", digitalRead(0), digitalRead(1), digitalRead(2), digitalRead(3), digitalRead(4), digitalRead(5), analogRead(A1), analogRead(A2));
+    int len = sprintf(msg, "{\"0\":%d,\"1\":%d,\"2\":%d,\"3\":%d,\"4\":%d,\"5\":%d,\"A0\":\"%d\",\"A1\":\"%d\",\"A2\":\"%d\"}",
+                           digitalRead(0), digitalRead(1), digitalRead(2), digitalRead(3), digitalRead(4), digitalRead(5), analogRead(A0), analogRead(A1), analogRead(A2));
     send200(client, msg, len);
   }
   else if (strcmp(path, "/") == 0){
