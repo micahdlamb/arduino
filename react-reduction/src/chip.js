@@ -17,6 +17,12 @@ export async function readPin(pin){
     :   values[pin]
 }
 
+export async function writePin(pin, value){
+    let ip = localStorage.getItem('chip-ip')
+    if (!ip) return
+    return fetch(`http://${ip}/${pin}/${value}`, {method: 'POST'}).then(res => res.json())
+}
+
 function mockValues(){
     return new Promise(resolve => {
         setTimeout(() => {

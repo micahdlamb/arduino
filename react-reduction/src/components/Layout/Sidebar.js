@@ -82,6 +82,7 @@ const pageContents = [
 
 const navItems = [
   { to: '/chillers', name: 'chillers', exact: true, Icon: MdDashboard },
+  { to: '/motors', name: 'motors', exact: true, Icon: MdWidgets },
   { to: '/dashboard', name: 'dashboard', exact: true, Icon: MdDashboard },
   { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
   { to: '/charts', name: 'charts', exact: false, Icon: MdInsertChart },

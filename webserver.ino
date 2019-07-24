@@ -98,21 +98,17 @@ void handleRequest(){
   char* method = strtok(buf, " ");
   char* path   = strtok(NULL, " ");
 
-  Serial.print("method: "); Serial.println(method);
-  Serial.print("path:   "); Serial.println(path);
-
   if (strcmp(method, "POST") == 0){
     char* pin   = strtok(&path[1], "/");
     char* value = strtok(NULL, " ");
     digitalWrite(atoi(pin), atoi(value));
 
-    int len = sprintf(msg, "pin %s set to %s", pin, value);
+    int len = sprintf(msg, "\"pin %s set to %s\"", pin, value);
     send200(client, msg, len);
   }
   else if (strcmp(path, "/pins") == 0){
-    //int len = sprintf(msg, "[%d,%d,%d,%d,%d,%d,%d,%d]", digitalRead(0), digitalRead(1), digitalRead(2), digitalRead(3), digitalRead(4), digitalRead(5), analogRead(A1), analogRead(A2));
-    int len = sprintf(msg, "{\"0\":%d,\"1\":%d,\"2\":%d,\"3\":%d,\"4\":%d,\"5\":%d,\"A0\":\"%d\",\"A1\":\"%d\",\"A2\":\"%d\"}",
-                           digitalRead(0), digitalRead(1), digitalRead(2), digitalRead(3), digitalRead(4), digitalRead(5), analogRead(A0), analogRead(A1), analogRead(A2));
+    int len = sprintf(msg, "{\"0\":%d,\"1\":%d,\"2\":%d,\"3\":%d,\"4\":%d,\"5\":%d,\"6\":%d,\"A0\":\"%d\",\"A1\":\"%d\",\"A2\":\"%d\"}",
+                           digitalRead(0), digitalRead(1), digitalRead(2), digitalRead(3), digitalRead(4), digitalRead(5), digitalRead(6), analogRead(A0), analogRead(A1), analogRead(A2));
     send200(client, msg, len);
   }
   else if (strcmp(path, "/") == 0){

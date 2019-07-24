@@ -11,6 +11,7 @@ import './styles/chip.scss'
 import { connect } from 'react-redux';
 
 const ChillersPage = React.lazy(() => import('pages/ChillersPage'));
+const MotorsPage = React.lazy(() => import('pages/MotorsPage'));
 const AlertPage = React.lazy(() => import('pages/AlertPage'));
 const AuthModalPage = React.lazy(() => import('pages/AuthModalPage'));
 const BadgePage = React.lazy(() => import('pages/BadgePage'));
@@ -62,6 +63,7 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/chillers" component={ChillersPage} />
+                <Route exact path="/motors" component={MotorsPage} />
                 <Route exact path="/dashboard" component={DashboardPage} />
                 <Route exact path="/login-modal" component={AuthModalPage} />
                 <Route exact path="/buttons" component={ButtonPage} />
