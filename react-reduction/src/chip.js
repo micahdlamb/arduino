@@ -8,7 +8,7 @@ export async function readPin(pin){
         //192.168.1.230
         valuesPromise = fetch(`http://${ip}/pins`).then(res => res.json())
         //valuesPromise = mockValues()
-        valuesPromise.then(() => valuesPromise = null)
+        valuesPromise.finally(() => valuesPromise = null)
     }
 
     let values = await valuesPromise
@@ -21,6 +21,13 @@ export async function writePin(pin, value){
     let ip = localStorage.getItem('chip-ip')
     if (!ip) return
     return fetch(`http://${ip}/${pin}/${value}`, {method: 'POST'}).then(res => res.json())
+}
+
+function fetch(url, kwds){
+    let controller = new AbortController()
+    kwds = {...kwds, signal: controller.signal}
+    setTimeout(() => controller.abort(), 1000)
+    return window.fetch(url, kwds)
 }
 
 function mockValues(){
