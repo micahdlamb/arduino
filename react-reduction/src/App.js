@@ -10,8 +10,12 @@ import './styles/reduction.scss';
 import './styles/chip.scss'
 import { connect } from 'react-redux';
 
-const ChillersPage = React.lazy(() => import('pages/ChillersPage'));
-const MotorsPage = React.lazy(() => import('pages/MotorsPage'));
+import ChillersPage from 'pages/ChillersPage'
+import MotorsPage   from 'pages/MotorsPage'
+//const ChillersPage = React.lazy(() => import('pages/ChillersPage'));
+//const MotorsPage = React.lazy(() => import('pages/MotorsPage'));
+
+{/*
 const AlertPage = React.lazy(() => import('pages/AlertPage'));
 const AuthModalPage = React.lazy(() => import('pages/AuthModalPage'));
 const BadgePage = React.lazy(() => import('pages/BadgePage'));
@@ -28,6 +32,7 @@ const ProgressPage = React.lazy(() => import('pages/ProgressPage'));
 const TablePage = React.lazy(() => import('pages/TablePage'));
 const TypographyPage = React.lazy(() => import('pages/TypographyPage'));
 const WidgetPage = React.lazy(() => import('pages/WidgetPage'));
+*/}
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -64,6 +69,7 @@ class App extends React.Component {
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/chillers" component={ChillersPage} />
                 <Route exact path="/motors" component={MotorsPage} />
+                {/*
                 <Route exact path="/dashboard" component={DashboardPage} />
                 <Route exact path="/login-modal" component={AuthModalPage} />
                 <Route exact path="/buttons" component={ButtonPage} />
@@ -84,6 +90,7 @@ class App extends React.Component {
                 <Route exact path="/forms" component={FormPage} />
                 <Route exact path="/input-groups" component={InputGroupPage} />
                 <Route exact path="/charts" component={ChartPage} />
+                */}
               </React.Suspense>
             </MainLayout>
           </Switch>

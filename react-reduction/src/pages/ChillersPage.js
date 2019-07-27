@@ -22,34 +22,18 @@ let options = {
 let temperatureCurves = [
   {
     label: 'Chiller 1',
-    pin: 1,
+    pin: 'T1',
     backgroundColor: getColor('primary'),
     borderColor: getColor('primary'),
     borderWidth: 2,
     fill: false
   },
-  {
-    label: 'Chiller 2',
-    pin: "A1",
-    backgroundColor: getColor('secondary'),
-    borderColor: getColor('secondary'),
-    borderWidth: 2,
-    fill: false
-  }
 ]
 
 let pressureCurves = [
   {
     label: 'Chiller 1',
-    pin: 3,
-    backgroundColor: getColor('primary'),
-    borderColor: getColor('primary'),
-    borderWidth: 2,
-    fill: false
-  },
-  {
-    label: 'Chiller 2',
-    pin: 4,
+    pin: 1,
     backgroundColor: getColor('secondary'),
     borderColor: getColor('secondary'),
     borderWidth: 2,
@@ -60,7 +44,7 @@ let pressureCurves = [
 const ChillersPage = ({notify}) => {
 
   let temperature = value => {
-    let alert = value > .5 || null
+    let alert = value >= 80 || null
     setAlert(alert)
     if (alert)
       notify({
@@ -68,7 +52,12 @@ const ChillersPage = ({notify}) => {
         message: 'Chiller got hot',
       })
   
-    return <span className={alert && 'warn-text'}>Temperature <strong>{value}</strong> °C</span>
+    return <span className={alert && 'warn-text'}><strong>{value.toFixed(2)}</strong>° C</span>
+  }
+
+  let pressure = value => {
+    let alert = value > .5 || null
+    return <span className={alert && 'warn-text'}><strong>{value}</strong> Pa</span>
   }
 
   let [alert, setAlert] = useState(null)
@@ -78,14 +67,19 @@ const ChillersPage = ({notify}) => {
       <Row>
         <Col xl={6} lg={12} md={12}>
           <PinValuesChart
-            title={<ReadPinValue pin={1} render={temperature}/>}
+            title={<>Temperature <ReadPinValue pin={'T1'} render={temperature}/></>}
             datasets={temperatureCurves}
             options={options}
             freq={1}
-        />
+          />
         </Col>
         <Col xl={6} lg={12} md={12}>
-          <PinValuesChart title="Pressure" datasets={pressureCurves} options={options} freq={1}/>
+          <PinValuesChart
+            title={<>Pressure <ReadPinValue pin={1} render={pressure}/></>}
+            datasets={pressureCurves}
+            options={options}
+            freq={1}
+          />
         </Col>
       </Row>
     </Page>

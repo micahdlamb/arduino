@@ -41,7 +41,9 @@ const Page = ({
           </Breadcrumb>
         )}
       </div>
-      {children}
+      <div className={bem.e('content')}>
+        {children}
+      </div>
     </Tag>
   );
 };

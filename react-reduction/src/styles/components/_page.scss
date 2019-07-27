@@ -1,6 +1,10 @@
 // page
 .cr-page {
-  min-height: 100vh;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
   &__header {
     @include media-breakpoint-down(sm) {
       flex-direction: column;
@@ -8,7 +12,7 @@
     }
     display: flex;
     align-items: flex-end;
-    align-self: center;
+    //align-self: center;
   }
 
   &__title {
@@ -17,6 +21,10 @@
     }
     padding-right: 0.5rem;
     margin-bottom: 1rem;
+  }
+
+  &__content {
+    flex: 1;
   }
 
   &__breadcrumb {

@@ -21,7 +21,7 @@ const ReadPinValue = ({pin, render, freq }) => {
 };
 
 ReadPinValue.propTypes = {
-  pin: PropTypes.number.isRequired,
+  pin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   render: PropTypes.func.isRequired,
   freq: PropTypes.number
 };

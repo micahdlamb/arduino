@@ -14,7 +14,7 @@ function rootReducer(state=initialState, action) {
         let {notifications, unconfirmedNotifications} = state
         let {notification} = newState
         notification.date = new Date()
-        let maxNotifications = Math.max(unconfirmedNotifications, 4)
+        let maxNotifications = 5
         newState = {
           notifications: [...notifications.slice(-maxNotifications), notification],
           unconfirmedNotifications: unconfirmedNotifications + 1
@@ -25,6 +25,7 @@ function rootReducer(state=initialState, action) {
         newState = {unconfirmedNotifications: 0}
         break
     }
+    
     return {...state, ...newState}
 }
 

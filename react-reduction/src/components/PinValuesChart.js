@@ -27,7 +27,8 @@ const PinValuesChart = ({ title, datasets, options, history, freq, ...restProps 
       if (labels.length > history)
         labels.shift()
 
-      chart.current.chartInstance.update()
+      if (chart.current)
+        chart.current.chartInstance.update()
     }, 1000/freq)
 
     return () => {
@@ -44,8 +45,8 @@ const PinValuesChart = ({ title, datasets, options, history, freq, ...restProps 
   return (
     <Card {...restProps}>
       <CardHeader>
-        {title}
-        <Button onClick={event => setPause(!pause)} size="sm" className='float-right' style={{padding: '0rem .2rem'}}>
+        <div>{title}</div>
+        <Button onClick={event => setPause(!pause)} size="sm" style={{padding: '0rem .2rem'}}>
           {pause ? <FaPlay/> : <FaPause/>}
         </Button>
       </CardHeader>

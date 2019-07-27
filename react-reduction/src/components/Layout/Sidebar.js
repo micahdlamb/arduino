@@ -83,10 +83,12 @@ const pageContents = [
 const navItems = [
   { to: '/chillers', name: 'chillers', exact: true, Icon: MdDashboard },
   { to: '/motors', name: 'motors', exact: true, Icon: MdWidgets },
+  /*
   { to: '/dashboard', name: 'dashboard', exact: true, Icon: MdDashboard },
   { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
   { to: '/charts', name: 'charts', exact: false, Icon: MdInsertChart },
   { to: '/widgets', name: 'widgets', exact: false, Icon: MdWidgets },
+  */
 ];
 
 const bem = bn.create('sidebar');
@@ -143,7 +145,7 @@ class Sidebar extends React.Component {
                 </BSNavLink>
               </NavItem>
             ))}
-
+            {/*
             <NavItem
               className={bem.e('nav-item')}
               onClick={this.handleClick('Components')}
@@ -263,6 +265,7 @@ class Sidebar extends React.Component {
                 </NavItem>
               ))}
             </Collapse>
+            */}
           </Nav>
         </div>
       </aside>
