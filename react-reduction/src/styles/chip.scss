@@ -33,6 +33,10 @@
 
 // Overrides 
 
+.input-group {
+    flex-wrap: nowrap;
+}
+
 .cr-header {
     justify-content: space-between;
     &__nav-right {
@@ -52,4 +56,14 @@
     > *           {margin: 0 5px;}
     >:first-child {margin-left: 0;}
     >:last-child  {margin-right: 0;}
+}
+
+.spinner-border {
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+.card-body > .spinner-border {
+    width: 5rem;
+    height: 5rem;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Spinner } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import * as chip from 'chip';
@@ -17,7 +18,7 @@ const ReadPinValue = ({pin, render, freq }) => {
     }
   }, [freq])
 
-  return node
+  return node || <Spinner size='sm'/>
 };
 
 ReadPinValue.propTypes = {

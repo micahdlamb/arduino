@@ -31,34 +31,36 @@ const MotorsPage = ({notify}) => {
 
   return (
     <Page title="Motors" className={alert && 'warn-page'}>
-      <div className='d-flex justify-content-center align-items-center' style={{height: '90%'}}>
-        <Card>
-          <CardHeader>
-            <h3 className="d-none d-md-block">Motor 1</h3>
-            <h3 className="d-md-none"><fa.FaRobot/></h3>
-            <div>
-              <InputGroup>
-                <Input
-                  type='number'
-                  innerRef={maxTemp}
-                  defaultValue={80}
-                  placeholder="Max °F"
-                  style={{maxWidth: '10ch'}}
-                />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText>
-                    <fa.FaFire/>
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </div>
-            <TogglePin pin={6} />
-          </CardHeader>
-          <CardBody className='text-center' style={{fontSize: '20vw'}}>
-            <ReadPinValue pin={'T1'} render={temperature}/>
-          </CardBody>
-        </Card>
-      </div>
+      <Row>
+        <Col xl={12} lg={12} md={12}>
+          <Card>
+            <CardHeader>
+              <h3 className="d-none d-md-block">Motor 1</h3>
+              <h3 className="d-md-none"><fa.FaRobot/></h3>
+              <div>
+                <InputGroup>
+                  <Input
+                    type='number'
+                    innerRef={maxTemp}
+                    defaultValue={80}
+                    placeholder="Max °F"
+                    style={{maxWidth: '10ch'}}
+                  />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText>
+                      <fa.FaFire/>
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+              </div>
+              <TogglePin pin={6} />
+            </CardHeader>
+            <CardBody className='text-center text-nowrap' style={{fontSize: '20vw'}}>
+              <ReadPinValue pin={'T1'} render={temperature}/>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
     </Page>
   );
 };

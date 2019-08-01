@@ -1,3 +1,4 @@
+import store from 'store';
 
 let valuesPromise
 
@@ -7,7 +8,7 @@ export async function readPin(pin){
         if (!ip) return 0
         //192.168.1.230
         valuesPromise = fetch(`http://${ip}/pins`).then(res => res.json())
-        //valuesPromise = mockValues()
+        // valuesPromise = mockValues()
         valuesPromise.finally(() => valuesPromise = null)
     }
 
@@ -27,20 +28,23 @@ function fetch(url, kwds){
     let controller = new AbortController()
     kwds = {...kwds, signal: controller.signal}
     setTimeout(() => controller.abort(), 1000)
-    return window.fetch(url, kwds)
+    let request = window.fetch(url, kwds)
+    request.then(resp => store.dispatch({type: "connect", connected: true}))
+    request.catch(err => store.dispatch({type: "connect", connected: false}))
+    return request
 }
 
 function mockValues(){
     return new Promise(resolve => {
         setTimeout(() => {
-            resolve([
-                Math.random(),
-                Math.random(),
-                Math.random(),
-                Math.random(),
-                Math.random(),
-                Math.random(),
-            ])
+            resolve({
+                1: Math.random(),
+                2: Math.random(),
+                3: Math.random(),
+                4: Math.random(),
+                5: Math.random(),
+                T1: Math.random(),
+            })
         }, 100)
     })
 }

@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 
 const initialState = {
   user: null,
+  connected: null,
   notifications: [],
   unconfirmedNotifications: 0
 }
