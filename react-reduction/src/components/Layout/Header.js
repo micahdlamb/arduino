@@ -2,7 +2,7 @@ import Avatar from 'components/Avatar';
 import { UserCard } from 'components/Card';
 import Notifications from 'components/Notifications';
 import SearchInput from 'components/SearchInput';
-import IPAddressInput from 'components/IPAddressInput'
+import ChipIps from 'components/ChipIps'
 //import { notificationsData } from 'demos/header';
 import withBadge from 'hocs/withBadge';
 import React from 'react';
@@ -95,7 +95,7 @@ class Header extends React.Component {
         */}
 
         <Nav navbar>
-          <IPAddressInput/>
+          <ChipIps size={20} outline/>
         </Nav>
         
         <Nav navbar className={bem.e('nav-right')}>

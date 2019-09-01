@@ -4,14 +4,14 @@ import { Row, Col, Card, CardHeader, CardBody, Input, InputGroup, InputGroupAddo
 import * as fa from 'react-icons/fa';
 import { getColor } from 'utils/colors';
 import hotIcon from 'assets/img/hot.png';
-import PinValuesChart from 'components/PinValuesChart';
-import ReadPinValue from 'components/ReadPinValue';
+import ReadPin from 'components/ReadPin';
 import TogglePin from 'components/TogglePin';
 import { connect } from 'react-redux';
 import {notify} from 'actions';
+import {chiller1} from 'chips';
 
 
-const MotorsPage = ({notify}) => {
+const SensorsPage = ({notify}) => {
   
   let temperature = value => {
     if (maxTemp.current && maxTemp.current.value){
@@ -30,12 +30,12 @@ const MotorsPage = ({notify}) => {
   let [alert, setAlert] = useState(null)
 
   return (
-    <Page title="Motors" className={alert && 'warn-page'}>
+    <Page title="Sensors" className={alert && 'warn-page'}>
       <Row>
         <Col xl={12} lg={12} md={12}>
           <Card>
             <CardHeader>
-              <h3 className="d-none d-md-block">Motor 1</h3>
+              <h3 className="d-none d-md-block">Chiller 1</h3>
               <h3 className="d-md-none"><fa.FaRobot/></h3>
               <div>
                 <InputGroup>
@@ -53,10 +53,10 @@ const MotorsPage = ({notify}) => {
                   </InputGroupAddon>
                 </InputGroup>
               </div>
-              <TogglePin pin={6} />
+              <TogglePin chip={chiller1} pin={6} />
             </CardHeader>
             <CardBody className='text-center text-nowrap' style={{fontSize: '20vw'}}>
-              <ReadPinValue pin={'T1'} render={temperature}/>
+              <ReadPin chip={chiller1} pin='T1' render={temperature}/>
             </CardBody>
           </Card>
         </Col>
@@ -66,4 +66,4 @@ const MotorsPage = ({notify}) => {
 };
 
 
-export default connect(({}) => ({}), { notify })(MotorsPage);
+export default connect(({}) => ({}), { notify })(SensorsPage);

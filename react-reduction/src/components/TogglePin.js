@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ToggleButton from 'react-toggle-button'
 
-import * as chip from 'chip';
-
-const TogglePin = ({ pin }) => {
+const TogglePin = ({ chip, pin }) => {
   
     let [value, setValue] = useState(false)
     let toggleValue = async () => {
-      chip.writePin(pin, value ? 0 : 1)
+      chip.writePin(chip, pin, value ? 0 : 1)
       setValue(!value)
     }
 
@@ -24,7 +22,7 @@ const TogglePin = ({ pin }) => {
 };
 
 TogglePin.propTypes = {
-  pin: PropTypes.number.isRequired,
+  pin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 TogglePin.defaultProps = {

@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 
 const initialState = {
   user: null,
-  connected: null,
+  connected: {},
   notifications: [],
   unconfirmedNotifications: 0
 }
@@ -11,6 +11,11 @@ const initialState = {
 function rootReducer(state=initialState, action) {
     let {type, ...newState} = action
     switch (type){
+      case 'connected':
+        let {connected} = state
+        newState = {connected: {...connected, ...newState}}
+        break
+
       case 'notify':
         let {notifications, unconfirmedNotifications} = state
         let {notification} = newState

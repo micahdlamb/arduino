@@ -10,8 +10,10 @@ import './styles/reduction.scss';
 import './styles/chip.scss'
 import { connect } from 'react-redux';
 
-import ChillersPage from 'pages/ChillersPage'
-import MotorsPage   from 'pages/MotorsPage'
+import SensorsPage from 'pages/SensorsPage'
+import ChartsPage from 'pages/ChartsPage'
+import SwitchesPage from 'pages/SwitchesPage'
+
 //const ChillersPage = React.lazy(() => import('pages/ChillersPage'));
 //const MotorsPage = React.lazy(() => import('pages/MotorsPage'));
 
@@ -44,7 +46,7 @@ class App extends React.Component {
       <BrowserRouter basename={getBasename()}>
         {/*<GAListener>*/}
           <Switch>
-            <Redirect exact path="/" to="/chillers" />
+            <Redirect exact path="/" to="/sensors" />
 
             <LayoutRoute
               exact
@@ -67,8 +69,9 @@ class App extends React.Component {
 
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/chillers" component={ChillersPage} />
-                <Route exact path="/motors" component={MotorsPage} />
+                <Route exact path="/sensors" component={SensorsPage} />
+                <Route exact path="/charts" component={ChartsPage} />
+                <Route exact path="/switches" component={SwitchesPage} />
                 {/*
                 <Route exact path="/dashboard" component={DashboardPage} />
                 <Route exact path="/login-modal" component={AuthModalPage} />

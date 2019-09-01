@@ -3,10 +3,11 @@ import Page from 'components/Page';
 import { Row, Col } from 'reactstrap';
 import { getColor } from 'utils/colors';
 import hotIcon from 'assets/img/hot.png';
-import PinValuesChart from 'components/PinValuesChart';
-import ReadPinValue from 'components/ReadPinValue';
+import ChartPins from 'components/ChartPins';
+import ReadPin from 'components/ReadPin';
 import { connect } from 'react-redux';
 import {notify} from 'actions';
+import {chiller1} from 'chips';
 
 let options = {
   scales: {
@@ -22,6 +23,7 @@ let options = {
 let temperatureCurves = [
   {
     label: 'Chiller 1',
+    chip: chiller1,
     pin: 'T1',
     backgroundColor: getColor('primary'),
     borderColor: getColor('primary'),
@@ -33,6 +35,7 @@ let temperatureCurves = [
 let pressureCurves = [
   {
     label: 'Chiller 1',
+    chip: chiller1,
     pin: 1,
     backgroundColor: getColor('secondary'),
     borderColor: getColor('secondary'),
@@ -41,7 +44,7 @@ let pressureCurves = [
   }
 ]
 
-const ChillersPage = ({notify}) => {
+const ChartsPage = ({notify}) => {
 
   let temperature = value => {
     let alert = value >= 80 || null
@@ -63,19 +66,19 @@ const ChillersPage = ({notify}) => {
   let [alert, setAlert] = useState(null)
 
   return (
-    <Page title="Chillers" className={alert && 'warn-page'}>
+    <Page title="Chiller 1" className={alert && 'warn-page'}>
       <Row>
         <Col xl={6} lg={12} md={12}>
-          <PinValuesChart
-            title={<>Temperature <ReadPinValue pin={'T1'} render={temperature}/></>}
+          <ChartPins
+            title={<>Temperature <ReadPin chip={chiller1} pin={'T1'} render={temperature}/></>}
             datasets={temperatureCurves}
             options={options}
             freq={1}
           />
         </Col>
         <Col xl={6} lg={12} md={12}>
-          <PinValuesChart
-            title={<>Pressure <ReadPinValue pin={1} render={pressure}/></>}
+          <ChartPins
+            title={<>Pressure <ReadPin chip={chiller1} pin={1} render={pressure}/></>}
             datasets={pressureCurves}
             options={options}
             freq={1}
@@ -87,4 +90,4 @@ const ChillersPage = ({notify}) => {
 };
 
 
-export default connect(({}) => ({}), { notify })(ChillersPage);
+export default connect(({}) => ({}), { notify })(ChartsPage);

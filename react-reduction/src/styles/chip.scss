@@ -18,18 +18,31 @@
     }
 }
 
-.blink-alert-glow {
-    animation: blinker-glow 1s ease-in-out infinite alternate;
-}
-@keyframes blinker-glow {
-    from {
-        box-shadow: 0 0 5px #F09;
-    }
-    to {
-        box-shadow: 0 0 20px #F09;
-    }
-}
+// .blink-alert-glow {
+//     animation: blinker-glow 1s ease-in-out infinite alternate;
+// }
+// @keyframes blinker-glow {
+//     from {
+//         box-shadow: 0 0 5px #F09;
+//     }
+//     to {
+//         box-shadow: 0 0 20px #F09;
+//     }
+// }
 
+.switches {
+    .row > div {
+        display: flex;
+        justify-content: center;
+        > div {
+            margin-left: 10px;
+        }
+        // display: grid;
+        // grid-template-columns: 1fr 1fr;
+        // justify-items: center;
+        //grid-gap: 10px;
+    }
+}
 
 // Overrides 
 
@@ -39,12 +52,8 @@
 
 .cr-header {
     justify-content: space-between;
-    &__nav-right {
-        margin-left: unset;
-    }
-
-    margin-bottom: 0;
 }
+
 .cr-page {
     padding-top: .5rem;
 }
@@ -66,4 +75,19 @@
 .card-body > .spinner-border {
     width: 5rem;
     height: 5rem;
+}
+
+.rangeslider {
+    border: 1px solid black !important;
+    &__handle {
+        border: 1px solid black !important;
+        box-shadow: none !important;
+        &::after {
+            background-color: white !important;
+            box-shadow: none !important;
+        }
+    }
+    &__fill {
+        background-color: #fc5c7d !important;
+    }
 }
