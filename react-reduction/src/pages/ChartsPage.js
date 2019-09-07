@@ -7,7 +7,7 @@ import ChartPins from 'components/ChartPins';
 import ReadPin from 'components/ReadPin';
 import { connect } from 'react-redux';
 import {notify} from 'actions';
-import {chiller1} from 'chips';
+import {chiller1, chiller2} from 'chips';
 
 let options = {
   scales: {
@@ -30,6 +30,15 @@ let temperatureCurves = [
     borderWidth: 2,
     fill: false
   },
+  {
+    label: 'Chiller 2',
+    chip: chiller2,
+    pin: 'T1',
+    backgroundColor: getColor('secondary'),
+    borderColor: getColor('secondary'),
+    borderWidth: 2,
+    fill: false
+  },
 ]
 
 let pressureCurves = [
@@ -37,11 +46,20 @@ let pressureCurves = [
     label: 'Chiller 1',
     chip: chiller1,
     pin: 1,
+    backgroundColor: getColor('primary'),
+    borderColor: getColor('primary'),
+    borderWidth: 2,
+    fill: false
+  },
+  {
+    label: 'Chiller 2',
+    chip: chiller2,
+    pin: 1,
     backgroundColor: getColor('secondary'),
     borderColor: getColor('secondary'),
     borderWidth: 2,
     fill: false
-  }
+  },
 ]
 
 const ChartsPage = ({notify}) => {
