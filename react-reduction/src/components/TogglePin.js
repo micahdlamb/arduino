@@ -6,7 +6,7 @@ const TogglePin = ({ chip, pin }) => {
   
     let [value, setValue] = useState(false)
     let toggleValue = async () => {
-      chip.writePin(chip, pin, value ? 0 : 1)
+      chip.writePin(pin, value ? 0 : 1)
       setValue(!value)
     }
 
