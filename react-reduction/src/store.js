@@ -30,6 +30,8 @@ function rootReducer(state=initialState, action) {
       case 'confirm-notifications':
         newState = {unconfirmedNotifications: 0}
         break
+
+      default:
     }
     
     return {...state, ...newState}

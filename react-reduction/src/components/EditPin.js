@@ -26,7 +26,6 @@ const EditPin = ({ chip, pin, type, addon, ...rest }) => {
   if (value === undefined)
     return <rs.Spinner/>
 
-    console.log(value)
   return (
     type === 'slider' ?
       <Slider value={value} onChange={handleChange} {...rest}/>

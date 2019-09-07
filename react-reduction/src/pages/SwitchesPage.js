@@ -1,10 +1,10 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import Page from 'components/Page';
 import * as rs from 'reactstrap';
-import * as fa from 'react-icons/fa';
-import { getColor } from 'utils/colors';
-import hotIcon from 'assets/img/hot.png';
-import ReadPin from 'components/ReadPin';
+// import * as fa from 'react-icons/fa';
+// import { getColor } from 'utils/colors';
+// import hotIcon from 'assets/img/hot.png';
+// import ReadPin from 'components/ReadPin';
 import ToggleButton from 'react-toggle-button'
 import { connect } from 'react-redux';
 import {notify} from 'actions';
@@ -70,4 +70,4 @@ const SwitchesPage = ({notify}) => {
 };
 
 
-export default connect(({}) => ({}), { notify })(SwitchesPage);
+export default connect(() => ({}), { notify })(SwitchesPage);

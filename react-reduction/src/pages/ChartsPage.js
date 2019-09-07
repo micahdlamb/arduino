@@ -90,4 +90,4 @@ const ChartsPage = ({notify}) => {
 };
 
 
-export default connect(({}) => ({}), { notify })(ChartsPage);
+export default connect(() => ({}), { notify })(ChartsPage);

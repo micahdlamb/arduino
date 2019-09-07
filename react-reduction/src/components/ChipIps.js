@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import * as rs from 'reactstrap';
 import * as fa from 'react-icons/fa';
@@ -71,3 +70,12 @@ const IpAddressInput = ({chip, connected}) => {
     </rs.InputGroup>
   )
 };
+
+
+export const WifiStatusIcon = connect(({connected}) => ({connected}))(({connected, chip}) => (
+  connected[chip.name] === undefined ? <fa.FaPlug/> : (
+    connected[chip.name] ?
+      <md.MdSignalWifi4Bar/>
+    : <md.MdSignalWifiOff/>
+  )
+))

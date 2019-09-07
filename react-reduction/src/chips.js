@@ -48,20 +48,20 @@ class Chip {
     }
 }
 
-function mockValues(){
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve({
-                1: Math.random(),
-                2: Math.random(),
-                3: Math.random(),
-                4: Math.random(),
-                5: Math.random(),
-                T1: Math.random(),
-            })
-        }, 100)
-    })
-}
+// function mockValues(){
+//     return new Promise(resolve => {
+//         setTimeout(() => {
+//             resolve({
+//                 1: Math.random(),
+//                 2: Math.random(),
+//                 3: Math.random(),
+//                 4: Math.random(),
+//                 5: Math.random(),
+//                 T1: Math.random(),
+//             })
+//         }, 100)
+//     })
+// }
 
 export const chiller1 = new Chip('chiller1', 'Chiller 1')
 export const chiller2 = new Chip('chiller2', 'Chiller 2')

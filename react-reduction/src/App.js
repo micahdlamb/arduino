@@ -1,4 +1,4 @@
-import { STATE_LOGIN, STATE_SIGNUP } from 'components/AuthForm';
+import { STATE_LOGIN } from 'components/AuthForm';
 //import GAListener from 'components/GAListener';
 import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
@@ -8,33 +8,27 @@ import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import './styles/chip.scss'
-import { connect } from 'react-redux';
 
 import SensorsPage from 'pages/SensorsPage'
 import ChartsPage from 'pages/ChartsPage'
 import SwitchesPage from 'pages/SwitchesPage'
 
-//const ChillersPage = React.lazy(() => import('pages/ChillersPage'));
-//const MotorsPage = React.lazy(() => import('pages/MotorsPage'));
-
-{/*
-const AlertPage = React.lazy(() => import('pages/AlertPage'));
-const AuthModalPage = React.lazy(() => import('pages/AuthModalPage'));
-const BadgePage = React.lazy(() => import('pages/BadgePage'));
-const ButtonGroupPage = React.lazy(() => import('pages/ButtonGroupPage'));
-const ButtonPage = React.lazy(() => import('pages/ButtonPage'));
-const CardPage = React.lazy(() => import('pages/CardPage'));
-const ChartPage = React.lazy(() => import('pages/ChartPage'));
-const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
-const DropdownPage = React.lazy(() => import('pages/DropdownPage'));
-const FormPage = React.lazy(() => import('pages/FormPage'));
-const InputGroupPage = React.lazy(() => import('pages/InputGroupPage'));
-const ModalPage = React.lazy(() => import('pages/ModalPage'));
-const ProgressPage = React.lazy(() => import('pages/ProgressPage'));
-const TablePage = React.lazy(() => import('pages/TablePage'));
-const TypographyPage = React.lazy(() => import('pages/TypographyPage'));
-const WidgetPage = React.lazy(() => import('pages/WidgetPage'));
-*/}
+// const AlertPage = React.lazy(() => import('pages/AlertPage'));
+// const AuthModalPage = React.lazy(() => import('pages/AuthModalPage'));
+// const BadgePage = React.lazy(() => import('pages/BadgePage'));
+// const ButtonGroupPage = React.lazy(() => import('pages/ButtonGroupPage'));
+// const ButtonPage = React.lazy(() => import('pages/ButtonPage'));
+// const CardPage = React.lazy(() => import('pages/CardPage'));
+// const ChartPage = React.lazy(() => import('pages/ChartPage'));
+// const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
+// const DropdownPage = React.lazy(() => import('pages/DropdownPage'));
+// const FormPage = React.lazy(() => import('pages/FormPage'));
+// const InputGroupPage = React.lazy(() => import('pages/InputGroupPage'));
+// const ModalPage = React.lazy(() => import('pages/ModalPage'));
+// const ProgressPage = React.lazy(() => import('pages/ProgressPage'));
+// const TablePage = React.lazy(() => import('pages/TablePage'));
+// const TypographyPage = React.lazy(() => import('pages/TypographyPage'));
+// const WidgetPage = React.lazy(() => import('pages/WidgetPage'));
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -129,15 +123,15 @@ const query = ({ width }) => {
 
 export default componentQueries(query)(App);
 
-let PrivateRoute = ({ component: Component, ...rest }) => {
-  return (<Route {...rest} render={(props) => (
-      rest.user
-        ? <Component {...props} />
-        : <Redirect to={{
-            pathname: "/login",
-            state: { from: props.location }
-          }} />
-  )} />);
-};
+// let PrivateRoute = ({ component: Component, ...rest }) => {
+//   return (<Route {...rest} render={(props) => (
+//       rest.user
+//         ? <Component {...props} />
+//         : <Redirect to={{
+//             pathname: "/login",
+//             state: { from: props.location }
+//           }} />
+//   )} />);
+// };
 
-PrivateRoute = connect(({ user }) => ({ user }))(PrivateRoute);
+// PrivateRoute = connect(({ user }) => ({ user }))(PrivateRoute);

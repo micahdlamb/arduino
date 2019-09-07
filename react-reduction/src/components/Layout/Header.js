@@ -1,7 +1,7 @@
 import Avatar from 'components/Avatar';
 import { UserCard } from 'components/Card';
 import Notifications from 'components/Notifications';
-import SearchInput from 'components/SearchInput';
+// import SearchInput from 'components/SearchInput';
 import ChipIps from 'components/ChipIps'
 //import { notificationsData } from 'demos/header';
 import withBadge from 'hocs/withBadge';
@@ -11,13 +11,13 @@ import {confirmNotifications} from 'actions';
 import {
   MdClearAll,
   MdExitToApp,
-  MdHelp,
-  MdInsertChart,
-  MdMessage,
+  // MdHelp,
+  // MdInsertChart,
+  // MdMessage,
   MdNotificationsActive,
   MdNotificationsNone,
-  MdPersonPin,
-  MdSettingsApplications,
+  // MdPersonPin,
+  // MdSettingsApplications,
 } from 'react-icons/md';
 import {
   Button,
