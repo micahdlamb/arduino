@@ -3,7 +3,7 @@ import PropTypes from 'utils/propTypes';
 
 import classNames from 'classnames';
 
-import { Card, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
+import { Card, CardTitle, /*CardSubtitle, CardText,*/ CardBody } from 'reactstrap';
 
 import Avatar from '../Avatar';
 

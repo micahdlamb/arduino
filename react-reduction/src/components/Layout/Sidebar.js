@@ -4,32 +4,32 @@ import SourceLink from 'components/SourceLink';
 import React from 'react';
 import { FaGithub } from 'react-icons/fa';
 import {
-  MdAccountCircle,
-  MdArrowDropDownCircle,
-  MdBorderAll,
-  MdBrush,
-  MdChromeReaderMode,
+  // MdAccountCircle,
+  // MdArrowDropDownCircle,
+  // MdBorderAll,
+  // MdBrush,
+  // MdChromeReaderMode,
   MdDashboard,
-  MdExtension,
-  MdGroupWork,
+  // MdExtension,
+  // MdGroupWork,
   MdInsertChart,
-  MdKeyboardArrowDown,
-  MdNotificationsActive,
-  MdPages,
-  MdRadioButtonChecked,
-  MdSend,
-  MdStar,
-  MdTextFields,
-  MdViewCarousel,
-  MdViewDay,
-  MdViewList,
-  MdWeb,
+  // MdKeyboardArrowDown,
+  // MdNotificationsActive,
+  // MdPages,
+  // MdRadioButtonChecked,
+  // MdSend,
+  // MdStar,
+  // MdTextFields,
+  // MdViewCarousel,
+  // MdViewDay,
+  // MdViewList,
+  // MdWeb,
   MdWidgets,
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
   // UncontrolledTooltip,
-  Collapse,
+  // Collapse,
   Nav,
   Navbar,
   NavItem,
@@ -43,42 +43,42 @@ const sidebarBackground = {
   backgroundRepeat: 'no-repeat',
 };
 
-const navComponents = [
-  { to: '/buttons', name: 'buttons', exact: false, Icon: MdRadioButtonChecked },
-  {
-    to: '/button-groups',
-    name: 'button groups',
-    exact: false,
-    Icon: MdGroupWork,
-  },
-  { to: '/forms', name: 'forms', exact: false, Icon: MdChromeReaderMode },
-  { to: '/input-groups', name: 'input groups', exact: false, Icon: MdViewList },
-  {
-    to: '/dropdowns',
-    name: 'dropdowns',
-    exact: false,
-    Icon: MdArrowDropDownCircle,
-  },
-  { to: '/badges', name: 'badges', exact: false, Icon: MdStar },
-  { to: '/alerts', name: 'alerts', exact: false, Icon: MdNotificationsActive },
-  { to: '/progress', name: 'progress', exact: false, Icon: MdBrush },
-  { to: '/modals', name: 'modals', exact: false, Icon: MdViewDay },
-];
+// const navComponents = [
+//   { to: '/buttons', name: 'buttons', exact: false, Icon: MdRadioButtonChecked },
+//   {
+//     to: '/button-groups',
+//     name: 'button groups',
+//     exact: false,
+//     Icon: MdGroupWork,
+//   },
+//   { to: '/forms', name: 'forms', exact: false, Icon: MdChromeReaderMode },
+//   { to: '/input-groups', name: 'input groups', exact: false, Icon: MdViewList },
+//   {
+//     to: '/dropdowns',
+//     name: 'dropdowns',
+//     exact: false,
+//     Icon: MdArrowDropDownCircle,
+//   },
+//   { to: '/badges', name: 'badges', exact: false, Icon: MdStar },
+//   { to: '/alerts', name: 'alerts', exact: false, Icon: MdNotificationsActive },
+//   { to: '/progress', name: 'progress', exact: false, Icon: MdBrush },
+//   { to: '/modals', name: 'modals', exact: false, Icon: MdViewDay },
+// ];
 
-const navContents = [
-  { to: '/typography', name: 'typography', exact: false, Icon: MdTextFields },
-  { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
-];
+// const navContents = [
+//   { to: '/typography', name: 'typography', exact: false, Icon: MdTextFields },
+//   { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
+// ];
 
-const pageContents = [
-  { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle },
-  {
-    to: '/login-modal',
-    name: 'login modal',
-    exact: false,
-    Icon: MdViewCarousel,
-  },
-];
+// const pageContents = [
+//   { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle },
+//   {
+//     to: '/login-modal',
+//     name: 'login modal',
+//     exact: false,
+//     Icon: MdViewCarousel,
+//   },
+// ];
 
 const navItems = [
   { to: '/sensors', name: 'sensors', exact: true, Icon: MdDashboard },
