@@ -33,7 +33,7 @@ class Chip {
         let controller = new AbortController()
         kwds = {...kwds, signal: controller.signal}
         setTimeout(() => controller.abort(), 1000)
-        let request = window.fetch('http://'+ip+path, kwds)
+        let request = window.fetch(`proxy?url=${encodeURIComponent('http://'+ip+path)}`, kwds)
         request.then(resp => store.dispatch({type: "connected", [this.name]: true}))
         request.catch(err => store.dispatch({type: "connected", [this.name]: false}))
         return request.then(res => res.json())
