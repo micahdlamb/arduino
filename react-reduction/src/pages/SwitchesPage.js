@@ -7,13 +7,13 @@ import * as rs from 'reactstrap';
 // import ReadPin from 'components/ReadPin';
 import ToggleButton from 'react-toggle-button'
 import { connect } from 'react-redux';
-import {notify} from 'actions';
+import {notify} from 'store';
 import TogglePin from 'components/TogglePin';
 import EditPin from 'components/EditPin';
 import {chiller1} from 'chips';
 
 
-const SwitchesPage = ({notify}) => {
+function SwitchesPage({notify}){
   
   let [auto, setAuto] = useState(false)
 

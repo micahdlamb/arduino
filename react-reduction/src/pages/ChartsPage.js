@@ -6,7 +6,7 @@ import hotIcon from 'assets/img/hot.png';
 import ChartPins from 'components/ChartPins';
 import ReadPin from 'components/ReadPin';
 import { connect } from 'react-redux';
-import {notify} from 'actions';
+import {notify} from 'store';
 import {chiller1, chiller2} from 'chips';
 
 let options = {
@@ -73,7 +73,7 @@ const ChartsPage = ({notify}) => {
         message: 'Chiller got hot',
       })
   
-    return <span className={alert && 'warn-text'}><strong>{value.toFixed(2)}</strong>° C</span>
+    return <span className={alert && 'warn-text'}><strong>{value.toFixed(2)}</strong>° F</span>
   }
 
   let pressure = value => {

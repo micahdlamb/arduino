@@ -7,7 +7,7 @@ import * as md from 'react-icons/md';
 import * as _chips from 'chips';
 let chips = Object.values(_chips)
 
-const ChipIps = ({connected, size, dispatch, ...rest}) => {
+function ChipIps({connected, size, dispatch, ...rest}){
 
   let [show, setShow] = useState(false)
   let toggle = () => setShow(!show)
@@ -31,7 +31,7 @@ const ChipIps = ({connected, size, dispatch, ...rest}) => {
           {chips.map(chip =>
             <rs.FormGroup key={chip.name}>
               <rs.Label>{chip.label}</rs.Label>
-              <IpAddressInput chip={chip} connected={connected[chip.name]}/>
+              <IpAddressInput chip={chip}/>
             </rs.FormGroup>
           )}
         </rs.Form>
@@ -60,11 +60,7 @@ const IpAddressInput = ({chip, connected}) => {
       />
       <rs.InputGroupAddon addonType="append">
         <rs.InputGroupText>
-          {connected === undefined ? <fa.FaPlug/> : (
-            connected ?
-              <md.MdSignalWifi4Bar/>
-            : <md.MdSignalWifiOff/>
-          )}
+          <WifiStatusIcon chip={chip}/>
         </rs.InputGroupText>
       </rs.InputGroupAddon>
     </rs.InputGroup>
@@ -72,9 +68,9 @@ const IpAddressInput = ({chip, connected}) => {
 };
 
 
-export const WifiStatusIcon = connect(({connected}) => ({connected}))(({connected, chip}) => (
-  connected[chip.name] === undefined ? <fa.FaPlug/> : (
-    connected[chip.name] ?
+export const WifiStatusIcon = connect(({connected}, {chip}) => ({connected: connected[chip.name]}))(({connected}) => (
+  connected === undefined ? <fa.FaPlug/> : (
+    connected ?
       <md.MdSignalWifi4Bar/>
     : <md.MdSignalWifiOff/>
   )

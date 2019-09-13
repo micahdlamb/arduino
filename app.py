@@ -1,6 +1,7 @@
 import asyncio, requests_async as requests
+import aiofiles
 from pathlib import Path
-from quart import Quart, request, send_from_directory
+from quart import Quart, request, send_from_directory, send_file
 
 app = Quart(__name__, static_folder='react-reduction/build')
 
@@ -19,6 +20,19 @@ async def proxy():
 
     return (await promises[url]).content
 
+
+settings_file = Path(__file__).parent / 'settings.json'
+
+@app.route("/settings", methods=['GET', 'POST'])
+async def settings():
+    if request.method == 'POST':
+        async with aiofiles.open(settings_file, 'wb') as f:
+            await f.write(await request.data)
+            return "success"
+    else:
+        return await send_file(settings_file, cache_timeout=-1)
+
+
 # Serve React App
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -27,6 +41,7 @@ def serve(path):
         return send_from_directory(app.static_folder, path)
     else:
         return send_from_directory(app.static_folder, 'index.html')
+
 
 # set QUART_APP=app:app && quart run --host=0.0.0.0 --port=80
 if __name__ == '__main__':

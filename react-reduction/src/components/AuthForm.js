@@ -4,7 +4,7 @@ import React from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {login} from 'actions';
+import {login} from 'store';
 
 class AuthForm extends React.Component {
   get isLogin() {

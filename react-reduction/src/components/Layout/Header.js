@@ -7,7 +7,7 @@ import ChipIps from 'components/ChipIps'
 import withBadge from 'hocs/withBadge';
 import React from 'react';
 import { connect } from 'react-redux';
-import {confirmNotifications} from 'actions';
+import {confirmNotifications} from 'store';
 import {
   MdClearAll,
   MdExitToApp,

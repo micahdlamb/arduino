@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import Page from 'components/Page';
 import { Row, Col, Card, CardHeader, CardBody, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import * as fa from 'react-icons/fa';
@@ -7,11 +7,11 @@ import hotIcon from 'assets/img/hot.png';
 import ReadPin from 'components/ReadPin';
 import TogglePin from 'components/TogglePin';
 import { connect } from 'react-redux';
-import {notify} from 'actions';
+import {notify, setSettings} from 'store';
 import {chiller1, chiller2} from 'chips';
 
 
-export default function SensorsPage({notify}){
+export default function SensorsPage(){
 
   return (
     <Page title="Sensors">
@@ -28,10 +28,10 @@ export default function SensorsPage({notify}){
 };
 
 
-function TemperatureCard({notify, chip, pin}){
+let TemperatureCard = ({notify, chip, pin, maxTemp, setSettings}) => {
   let temperature = value => {
-    if (maxTemp.current && maxTemp.current.value){
-      var alert = value >= maxTemp.current.value || null
+    if (maxTemp != null){
+      var alert = value >= maxTemp || null
       if (alert)
         notify({
           avatar: hotIcon,
@@ -40,8 +40,6 @@ function TemperatureCard({notify, chip, pin}){
     }
     return <span className={alert && 'warn-text'}>{value.toFixed(1)}° F</span>
   }
-
-  let maxTemp = useRef(null)
 
   return (
     <Card>
@@ -52,8 +50,8 @@ function TemperatureCard({notify, chip, pin}){
           <InputGroup>
             <Input
               type='number'
-              innerRef={maxTemp}
-              defaultValue={80}
+              value={maxTemp != null ? maxTemp : ''}
+              onChange={event => setSettings({maxTemp: event.target.value})}
               placeholder="Max °F"
               style={{maxWidth: '10ch'}}
             />
@@ -73,5 +71,4 @@ function TemperatureCard({notify, chip, pin}){
   )
 }
 
-// eslint-disable-next-line
-TemperatureCard = connect(() => ({}), { notify })(TemperatureCard)
+TemperatureCard = connect(({settings}) => ({maxTemp: settings.maxTemp}), { notify, setSettings })(TemperatureCard)

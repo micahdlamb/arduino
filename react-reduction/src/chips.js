@@ -1,4 +1,4 @@
-import store from 'store';
+import store, {setSettings} from 'store';
 
 class Chip {
     constructor(name, label){
@@ -32,7 +32,8 @@ class Chip {
         }
         let controller = new AbortController()
         kwds = {...kwds, signal: controller.signal}
-        setTimeout(() => controller.abort(), 1000)
+        setTimeout(() => controller.abort(), 3000)
+        // let request = window.fetch('http://'+ip+path, kwds)
         let request = window.fetch(`proxy?url=${encodeURIComponent('http://'+ip+path)}`, kwds)
         request.then(resp => store.dispatch({type: "connected", [this.name]: true}))
         request.catch(err => store.dispatch({type: "connected", [this.name]: false}))
@@ -40,11 +41,11 @@ class Chip {
     }
 
     getIp(){
-        return localStorage.getItem(`${this.name}-ip`)
+        return store.getState().settings[`${this.name}-ip`]
     }
 
     setIp(ip){
-        localStorage.setItem(`${this.name}-ip`, ip)
+        store.dispatch(setSettings({[`${this.name}-ip`]: ip}))
     }
 }
 
