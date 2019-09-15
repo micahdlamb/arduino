@@ -15,7 +15,7 @@ async def proxy():
         return (await requests.post(url)).content
 
     if url not in promises:
-        promises[url] = asyncio.ensure_future(requests.get(url))
+        promises[url] = asyncio.ensure_future(requests.get(url, timeout=3))
         promises[url].add_done_callback(lambda future: promises.pop(url))
 
     return (await promises[url]).content
@@ -45,4 +45,8 @@ def serve(path):
 
 # set QUART_APP=app:app && quart run --host=0.0.0.0 --port=80
 if __name__ == '__main__':
+
+    import subprocess,sys
+    subprocess.Popen([sys.executable, 'poll.py'])
+
     app.run(host="0.0.0.0", debug=True)

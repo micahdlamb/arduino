@@ -14,7 +14,7 @@ const ReadPin = ({chip, pin, render, freq }) => {
     return () => {
       clearInterval(id)
     }
-  }, [freq])
+  })
 
   return node || <Spinner size='sm'/>
 };

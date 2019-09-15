@@ -20,8 +20,8 @@
 #include <WiFiNINA.h>
 
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
-//char ssid[] = "Orion";       // your network SSID (name)
-//char pass[] = "3710flora";   // your network password (use for WPA, or use as key for WEP)
+// char ssid[] = "Orion";       // your network SSID (name)
+// char pass[] = "3710flora";   // your network password (use for WPA, or use as key for WEP)
 char ssid[] = "Ciller Room";       // your network SSID (name)
 char pass[] = "12345678";   // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;            // your network key Index number (needed only for WEP)
@@ -105,7 +105,7 @@ void handleRequest(){
     int len = sprintf(msg, "\"pin %s set to %s\"", pin, value);
     send200(client, msg, len);
   }
-  else if (strcmp(path, "/pins") == 0){
+  else if (strcmp(method, "GET") == 0){
     // Call sensors.requestTemperatures() to issue a global temperature and Requests to all devices on the bus
     sensors.requestTemperatures(); 
     float T1 = sensors.getTempFByIndex(0);

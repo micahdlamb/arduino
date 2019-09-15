@@ -51,7 +51,7 @@ let TemperatureCard = ({notify, chip, pin, maxTemp, setSettings}) => {
             <Input
               type='number'
               value={maxTemp != null ? maxTemp : ''}
-              onChange={event => setSettings({maxTemp: event.target.value})}
+              onChange={event => setSettings({maxTemp: event.target.valueAsNumber})}
               placeholder="Max °F"
               style={{maxWidth: '10ch'}}
             />

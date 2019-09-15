@@ -8,7 +8,7 @@ class Chip {
 
     async readPin(pin){
         if (!this.valuesPromise){
-            this.valuesPromise = this.fetchJson(`/pins`)
+            this.valuesPromise = this.fetchJson()
             if (!this.valuesPromise) return 0
             // valuesPromise = mockValues()
             this.valuesPromise.finally(() => this.valuesPromise = null)
@@ -24,7 +24,7 @@ class Chip {
         return this.fetchJson(`/${pin}/${value}`, {method: 'POST'})
     }
 
-    fetchJson(path, kwds){
+    fetchJson(path='', kwds){
         let ip = this.getIp()
         if (!ip){
             store.dispatch({type: "connected", [this.name]: undefined})
@@ -34,10 +34,10 @@ class Chip {
         kwds = {...kwds, signal: controller.signal}
         setTimeout(() => controller.abort(), 3000)
         // let request = window.fetch('http://'+ip+path, kwds)
-        let request = window.fetch(`proxy?url=${encodeURIComponent('http://'+ip+path)}`, kwds)
+        let request = window.fetch(`proxy?url=${encodeURIComponent('http://'+ip+path)}`, kwds).then(res => res.json())
         request.then(resp => store.dispatch({type: "connected", [this.name]: true}))
         request.catch(err => store.dispatch({type: "connected", [this.name]: false}))
-        return request.then(res => res.json())
+        return request
     }
 
     getIp(){
