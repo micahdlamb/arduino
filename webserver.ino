@@ -1,30 +1,12 @@
-/*
-  WiFi Web Server
-
- A simple web server that shows the value of the analog input pins.
-
- This example is written for a network using WPA encryption. For
- WEP or WPA, change the Wifi.begin() call accordingly.
-
- Circuit:
- * Analog inputs attached to pins A0 through A5 (optional)
-
- created 13 July 2010
- by dlf (Metodo2 srl)
- modified 31 May 2012
- by Tom Igoe
-
- */
-
 #include <SPI.h>
 #include <WiFiNINA.h>
+#include <Adafruit_SleepyDog.h>
 
-///////please enter your sensitive data in the Secret tab/arduino_secrets.h
-// char ssid[] = "Orion";       // your network SSID (name)
-// char pass[] = "3710flora";   // your network password (use for WPA, or use as key for WEP)
-char ssid[] = "Ciller Room";       // your network SSID (name)
-char pass[] = "12345678";   // your network password (use for WPA, or use as key for WEP)
-int keyIndex = 0;            // your network key Index number (needed only for WEP)
+//char ssid[] = "Orion";       // your network SSID (name)
+//char pass[] = "3710flora";   // your network password (use for WPA, or use as key for WEP)
+char ssid[] = "Ciller Room"; // your network SSID (name)
+char pass[] = "12345678";    // your network password (use for WPA, or use as key for WEP)
+//int keyIndex = 0;            // your network key Index number (needed only for WEP)
 
 int status = WL_IDLE_STATUS;
 WiFiServer server(80);
@@ -39,8 +21,8 @@ OneWire oneWire(ONE_WIRE_BUS);
 // Pass our oneWire reference to Dallas Temperature sensor 
 DallasTemperature sensors(&oneWire);
 
-
 void setup() {
+
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
 //  while (!Serial) {
@@ -56,21 +38,13 @@ void setup() {
 
   sensors.begin();
   initializeWifi();
+
+  Watchdog.enable(4000);
 }
 
 void loop() {
-  /*
-  // Call sensors.requestTemperatures() to issue a global temperature and Requests to all devices on the bus
-  sensors.requestTemperatures(); 
-  
-  Serial.print("Celsius temperature: ");
-  // Why "byIndex"? You can have more than one IC on the same bus. 0 refers to the first IC on the wire
-  Serial.print(sensors.getTempCByIndex(0)); 
-  Serial.print(" - Fahrenheit temperature: ");
-  Serial.println(sensors.getTempFByIndex(0));
-  delay(1000);
-  */
-  
+  Watchdog.reset();
+  //monitorWifiStatus();
   handleRequest();
 }
 
@@ -89,25 +63,17 @@ void handleRequest(){
     char c = client.read();
     Serial.write(c);
     buf[i++] = c;
-    // Reading past first line isn't necessary if closing connection
-    if (strncmp(&buf[i-4], "\r\n\r\n", 4) == 0)
+    if (c == '\n')
       break;
   }
 
   char* method = strtok(buf, " ");
   char* path   = strtok(NULL, " ");
 
-  if (strcmp(method, "POST") == 0){
-    char* pin   = strtok(&path[1], "/");
-    char* value = strtok(NULL, " ");
-    digitalWrite(atoi(pin), atoi(value));
-
-    int len = sprintf(msg, "\"pin %s set to %s\"", pin, value);
-    send200(client, msg, len);
-  }
-  else if (strcmp(method, "GET") == 0){
+  if (strcmp(method, "GET") == 0){
     // Call sensors.requestTemperatures() to issue a global temperature and Requests to all devices on the bus
-    sensors.requestTemperatures(); 
+    sensors.requestTemperatures();
+    // Why "byIndex"? You can have more than one IC on the same bus. 0 refers to the first IC on the wire
     float T1 = sensors.getTempFByIndex(0);
 
     int len = sprintf(msg, "{\"0\":%d,\"1\":%d,\"2\":%d,\"3\":%d,\"4\":%d,\"5\":%d,\"6\":%d,\"A0\":%d,\"A1\":%d,\"A2\":%d,\"T1\":%f}",
@@ -116,15 +82,21 @@ void handleRequest(){
                            T1);
     send200(client, msg, len);
   }
+  else if (strcmp(method, "POST") == 0){
+    char* pin   = strtok(&path[1], "/");
+    char* value = strtok(NULL, " ");
+    digitalWrite(atoi(pin), atoi(value));
+
+    int len = sprintf(msg, "\"pin %s set to %s\"", pin, value);
+    send200(client, msg, len);
+  }
   else {
     client.print("HTTP/1.1 404 Not Found");
-    client.stop();
   }
 
   // Content-Length not needed if stopping connection
   // Ideally connections could be reused? But seems to cause arduino to stop working after a while.
   client.stop();
-  Serial.println("client disconnected");
 }
 
 void send200(WiFiClient& client, char* body, int len){
@@ -179,4 +151,16 @@ void printWifiStatus() {
   Serial.print("signal strength (RSSI):");
   Serial.print(rssi);
   Serial.println(" dBm");
+}
+
+int lastWifiStatus = 0;
+void monitorWifiStatus() {
+  int status = WiFi.status();
+  if (status != lastWifiStatus){
+    Serial.print("WiFi status ");
+    Serial.print(lastWifiStatus);
+    Serial.print(" -> ");
+    Serial.println(status);
+    lastWifiStatus = status;
+  }
 }
