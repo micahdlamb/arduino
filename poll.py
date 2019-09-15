@@ -1,4 +1,4 @@
-import sys, os, json, requests, time, contextlib, traceback
+import sys, json, requests, time, contextlib, traceback
 from datetime import datetime
 
 from pathlib import Path
@@ -14,26 +14,32 @@ def poll():
 
     class Chip:
         def __init__(self, name):
-            self.__dict__.update(name=name, last_alert_time=0)
+            self.name = name
+            self.last_alert_time = 0
 
         @property
         def pins(self):
             ip = settings.get(f"{self.name}-ip")
             if not ip: return
-            return requests.get(f"http://localhost:5000/proxy?url=http://{ip}").json()
+            url = requests.utils.quote(f"http://{ip}")
+            response = requests.get(f"http://localhost:5000/proxy?url={url}")
+            response.raise_for_status()
+            return response.json()
 
-        def log(self, *values):
-            with open(dir / f"{self.name}.log", 'a') as f:
+        def log(self, type, *values):
+            with open(dir / f"{self.name}-{type}.log", 'a') as f:
                 items = map(str, (datetime.now().isoformat(),)+values)
-                f.write(", ".join(items))
+                f.write(" ".join(items)+"\n")
 
-        def alert(self, body, **msg):
+        def alert(self, msg):
             now = time.time()
             if now - self.last_alert_time < 5*60:
                 return
             self.last_alert_time = now
-            print(body)
-            return client.messages.create(body=body, **msg)
+            print(msg)
+            from_ = "+16149082932"
+            to    = "+17404077509"
+            return [client.messages.create(from_=from_, to=to, body=msg) for to in to.split()]
 
     chiller1 = Chip(name="chiller1")
     chiller2 = Chip(name="chiller2")
@@ -54,13 +60,10 @@ def poll():
                     pins = chip.pins
                     if not pins: continue
 
-                    chip.log(pins['T1'])
+                    chip.log('temp', pins['T1'])
                     if pins["T1"] > settings["maxTemp"]:
-                        chip.alert(
-                            body=f"{chip.name} got too hot {round(pins['T1'],1)}° F",
-                            from_="+16149082932",
-                            to="+17404077509"
-                        )
+                        chip.alert(f"{chip.name} got too hot {round(pins['T1'],1)}° F")
+
         except:
             print(traceback.format_exc())
 
@@ -79,5 +82,5 @@ class Tee:
 
 
 if __name__ == '__main__':
-    with open(dir / 'log.txt', 'w') as log, contextlib.redirect_stdout(Tee(log, sys.stdout)):
+    with open(dir / 'out.log', 'w') as log, contextlib.redirect_stdout(Tee(log, sys.stdout)):
         poll()
