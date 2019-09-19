@@ -83,6 +83,7 @@ const sidebarBackground = {
 const navItems = [
   { to: '/sensors', name: 'sensors', exact: true, Icon: MdDashboard },
   { to: '/charts', name: 'charts', exact: true, Icon: MdInsertChart },
+  { to: '/history', name: 'history', exact: true, Icon: MdInsertChart },
   { to: '/switches', name: 'switches', exact: true, Icon: MdWidgets },
   /*
   { to: '/dashboard', name: 'dashboard', exact: true, Icon: MdDashboard },

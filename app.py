@@ -21,7 +21,8 @@ async def proxy():
     return (await promises[url]).content
 
 
-settings_file = Path(__file__).parent / 'settings.json'
+root = Path(__file__).parent
+settings_file = root / 'settings.json'
 
 @app.route("/settings", methods=['GET', 'POST'])
 async def settings():
@@ -31,6 +32,11 @@ async def settings():
             return "success"
     else:
         return await send_file(settings_file, cache_timeout=-1)
+
+
+@app.route("/logs/<file>")
+async def logs(file):
+    return await send_file(root / (file+".log"), cache_timeout=-1)
 
 
 # Serve React App

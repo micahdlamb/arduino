@@ -15,7 +15,8 @@ def poll():
     class Chip:
         def __init__(self, name):
             self.name = name
-            self.last_alert_time = 0
+            self.log_ready   = Ready(60)
+            self.alert_ready = Ready(5*60)
 
         @property
         def pins(self):
@@ -27,18 +28,17 @@ def poll():
             return response.json()
 
         def log(self, type, *values):
+            if not self.log_ready(): return
             with open(dir / f"{self.name}-{type}.log", 'a') as f:
-                items = map(str, (datetime.now().isoformat(),)+values)
+                #items = map(str, (datetime.now().isoformat(),)+values)
+                items = map(str, (time.time(),) + values)
                 f.write(" ".join(items)+"\n")
 
         def alert(self, msg):
-            now = time.time()
-            if now - self.last_alert_time < 5*60:
-                return
-            self.last_alert_time = now
+            if not self.alert_ready(): return
             print(msg)
             from_ = "+16149082932"
-            to    = "+17404077509"
+            to    = "+17404077509 +16144008013"
             return [client.messages.create(from_=from_, to=to, body=msg) for to in to.split()]
 
     chiller1 = Chip(name="chiller1")
@@ -55,7 +55,7 @@ def poll():
             print("Settings loaded")
 
         try:
-            if settings["maxTemp"]:
+            if settings.get("maxTemp"):
                 for chip in [chiller1, chiller2]:
                     pins = chip.pins
                     if not pins: continue
@@ -79,6 +79,19 @@ class Tee:
     def flush(self):
         for file in self.files:
             file.flush()
+
+
+class Ready:
+    def __init__(self, wait):
+        self.last_time = 0
+        self.wait = wait
+
+    def __call__(self):
+        now = time.time()
+        if now - self.last_time < self.wait:
+            return False
+        self.last_time = now
+        return True
 
 
 if __name__ == '__main__':

@@ -11,6 +11,7 @@ import './styles/chip.scss'
 
 import SensorsPage from 'pages/SensorsPage'
 import ChartsPage from 'pages/ChartsPage'
+import HistoryPage from 'pages/HistoryPage'
 import SwitchesPage from 'pages/SwitchesPage'
 
 // const AlertPage = React.lazy(() => import('pages/AlertPage'));
@@ -65,6 +66,7 @@ class App extends React.Component {
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/sensors" component={SensorsPage} />
                 <Route exact path="/charts" component={ChartsPage} />
+                <Route exact path="/history" component={HistoryPage} />
                 <Route exact path="/switches" component={SwitchesPage} />
                 {/*
                 <Route exact path="/dashboard" component={DashboardPage} />
