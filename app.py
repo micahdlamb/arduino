@@ -55,4 +55,4 @@ if __name__ == '__main__':
     import subprocess,sys
     subprocess.Popen([sys.executable, 'poll.py'])
 
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port=80, debug=True)

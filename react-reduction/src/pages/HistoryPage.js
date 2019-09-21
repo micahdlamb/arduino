@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import Page from 'components/Page';
 import { Line } from 'react-chartjs-2';
-import { Row, Col } from 'reactstrap';
 import { getColor } from 'utils/colors';
-import { Card, CardHeader, CardBody } from 'reactstrap';
+import * as rs from 'reactstrap';
+import * as fa from 'react-icons/fa';
+import EditSetting from 'components/EditSetting';
 
 let options = {
   scales: {
@@ -41,18 +42,28 @@ export default function HistoryPage(){
 
   return (
     <Page title="History">
-      <Row>
-        <Col xl={12} lg={12} md={12}>
-          <Card>
-            <CardHeader>
-              Temperatures
-            </CardHeader>
-            <CardBody>
+      <rs.Row>
+        <rs.Col xl={12} lg={12} md={12}>
+          <rs.Card>
+            <rs.CardHeader>
+              <h3>Temperatures</h3>
+              <div>
+                <rs.InputGroup>
+                  <EditSetting setting='historyInterval' type='number' placeholder='Record Interval (s)'/>
+                  <rs.InputGroupAddon addonType="append">
+                    <rs.InputGroupText>
+                      <fa.FaHistory/>
+                    </rs.InputGroupText>
+                  </rs.InputGroupAddon>
+                </rs.InputGroup>
+              </div>
+            </rs.CardHeader>
+            <rs.CardBody>
               <Line data={{datasets}} options={options} />
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+            </rs.CardBody>
+          </rs.Card>
+        </rs.Col>
+      </rs.Row>
     </Page>
   );
 };
