@@ -57,14 +57,14 @@ def poll():
             print("Settings loaded")
 
         try:
-            if settings.get("maxTemp"):
-                for chip in [chiller1, chiller2]:
-                    pins = chip.pins
-                    if not pins: continue
+            for chip in [chiller1, chiller2]:
+                pins = chip.pins
+                if not pins: continue
 
-                    chip.log('temp', pins['T1'])
-                    if pins["T1"] > settings["maxTemp"]:
-                        chip.alert(f"{chip.name} got too hot {round(pins['T1'],1)}° F")
+                chip.log('temp', pins['T1'])
+                max_temp = settings.get('maxTemp')
+                if max_temp and pins["T1"] > settings["maxTemp"]:
+                    chip.alert(f"{chip.name} got too hot {round(pins['T1'],1)}° F")
 
         except KeyboardInterrupt:
             raise
