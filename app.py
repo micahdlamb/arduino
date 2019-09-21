@@ -7,7 +7,7 @@ app = Quart(__name__, static_folder='react-reduction/build')
 
 promises = dict()
 
-@app.route("/proxy")
+@app.route("/proxy", methods=['GET', 'POST'])
 async def proxy():
     url = request.args.get("url")
 
@@ -55,4 +55,4 @@ if __name__ == '__main__':
     import subprocess,sys
     subprocess.Popen([sys.executable, 'poll.py'])
 
-    app.run(host="0.0.0.0", port=80, debug=True)
+    app.run(host="0.0.0.0", debug=True)

@@ -45,7 +45,7 @@ let pressureCurves = [
   {
     label: 'Chiller 1',
     chip: chiller1,
-    pin: 1,
+    pin: 6,
     backgroundColor: getColor('primary'),
     borderColor: getColor('primary'),
     borderWidth: 2,
@@ -54,7 +54,7 @@ let pressureCurves = [
   {
     label: 'Chiller 2',
     chip: chiller2,
-    pin: 1,
+    pin: 7,
     backgroundColor: getColor('secondary'),
     borderColor: getColor('secondary'),
     borderWidth: 2,

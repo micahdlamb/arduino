@@ -22,7 +22,7 @@ def poll():
             if not ip: return
             url = requests.utils.quote(f"http://{ip}")
             try:
-                response = requests.get(f"http://localhost/proxy?url={url}")
+                response = requests.get(f"http://localhost:5000/proxy?url={url}")
             except requests.exceptions.ConnectionError as error:
                 return print(f"Couldn't connect to {self.name} - {ip}")
             response.raise_for_status()

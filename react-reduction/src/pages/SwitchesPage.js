@@ -34,11 +34,11 @@ function SwitchesPage({notify}){
                 <rs.CardBody>
                   <rs.FormGroup>
                     <rs.Label>RPM</rs.Label>
-                    <EditPin chip={chiller1} pin={10}/>
+                    <EditPin chip={chiller1} pin={1}/>
                   </rs.FormGroup>
                   <rs.FormGroup>
                     <rs.Label>Voltage</rs.Label>
-                    <EditPin chip={chiller1} pin={10} type='slider'/>
+                    <EditPin chip={chiller1} pin={1} type='slider'/>
                   </rs.FormGroup>
                 </rs.CardBody>
               </rs.Card>
