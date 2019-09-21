@@ -1,5 +1,4 @@
-import asyncio, requests_async as requests
-import aiofiles
+import asyncio, aiofiles, requests_async as requests
 from pathlib import Path
 from quart import Quart, request, send_from_directory, send_file
 
@@ -23,6 +22,12 @@ async def proxy():
 
 root = Path(__file__).parent
 settings_file = root / 'settings.json'
+if not settings_file.exists():
+    with open(settings_file, 'w') as f:
+        import json
+        f.write(json.dumps(dict(
+            historyInterval = 60
+        )))
 
 @app.route("/settings", methods=['GET', 'POST'])
 async def settings():

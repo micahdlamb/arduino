@@ -29,7 +29,8 @@ def poll():
             return response.json()
 
         def log(self, type, *values):
-            wait = settings.get("historyInterval", 5*60)
+            wait = settings.get("historyInterval")
+            if not wait: return
             if not self.log_ready(wait): return
             with open(dir / f"{self.name}-{type}.log", 'a') as f:
                 #items = map(str, (datetime.now().isoformat(),)+values)
