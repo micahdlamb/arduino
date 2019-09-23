@@ -65,6 +65,10 @@
     > *           {margin: 0 5px;}
     >:first-child {margin-left: 0;}
     >:last-child  {margin-right: 0;}
+
+    h3 {
+        white-space: nowrap;
+    }
 }
 
 .spinner-border {
