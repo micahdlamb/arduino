@@ -1,12 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Page from 'components/Page';
 import { Row, Col } from 'reactstrap';
 import { getColor } from 'utils/colors';
-import hotIcon from 'assets/img/hot.png';
 import ChartPins from 'components/ChartPins';
 import ReadPin from 'components/ReadPin';
-import { connect } from 'react-redux';
-import {notify} from 'store';
 import {chiller1, chiller2} from 'chips';
 
 let options = {
@@ -62,29 +59,13 @@ let pressureCurves = [
   },
 ]
 
-const ChartsPage = ({notify}) => {
+export default function ChartsPage(){
 
-  let temperature = value => {
-    let alert = value >= 80 || null
-    setAlert(alert)
-    if (alert)
-      notify({
-        avatar: hotIcon,
-        message: 'Chiller got hot',
-      })
-  
-    return <span className={alert && 'warn-text'}><strong>{value.toFixed(2)}</strong>° F</span>
-  }
-
-  let pressure = value => {
-    let alert = value > .5 || null
-    return <span className={alert && 'warn-text'}><strong>{value}</strong> Pa</span>
-  }
-
-  let [alert, setAlert] = useState(null)
+  let temperature = value => <><strong>{value.toFixed(2)}</strong>° F</>
+  let pressure    = value => <><strong>{value.toFixed(2)}</strong> PSI</>
 
   return (
-    <Page title="Chiller 1" className={alert && 'warn-page'}>
+    <Page title="Chiller 1">
       <Row>
         <Col xl={6} lg={12} md={12}>
           <ChartPins
@@ -104,8 +85,5 @@ const ChartsPage = ({notify}) => {
         </Col>
       </Row>
     </Page>
-  );
-};
-
-
-export default connect(() => ({}), { notify })(ChartsPage);
+  )
+}
