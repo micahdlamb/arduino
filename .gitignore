@@ -3,3 +3,4 @@
 __pycache__
 *.log
 settings.json
+secrets.sh

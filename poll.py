@@ -3,10 +3,10 @@ import sys, os, json, requests, time, contextlib, traceback
 from pathlib import Path
 dir = Path(__file__).parent
 
-from twilio.rest import Client
-client = Client(os.environ['twilio_sid'], os.environ['twilio_token'])
-
-alert_phones = "+17404077509 +16144008013"
+import nexmo
+client = nexmo.Client(key=os.environ['nexmo_key'], secret=os.environ['nexmo_secret'])
+from_phone   = os.environ['nexmo_from']
+alert_phones = "17404077509 16144008013"
 
 def poll():
 
@@ -40,8 +40,12 @@ def poll():
         def alert(self, msg):
             if not self.alert_ready(5*60): return
             print(msg)
-            from_ = "+16146624426"
-            return [client.messages.create(from_=from_, to=to, body=msg) for to in alert_phones.split()]
+            for to in alert_phones.split():
+                client.send_message({
+                    'from': from_phone,
+                    'to': to,
+                    'text': msg
+                })
 
     chiller1 = Chip(name="chiller1")
     chiller2 = Chip(name="chiller2")

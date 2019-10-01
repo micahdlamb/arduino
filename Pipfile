@@ -9,7 +9,7 @@ ipython = "*"
 [packages]
 quart = "*"
 requests-async = "*"
-twilio = "*"
+nexmo = "*"
 
 [requires]
 python_version = "3.7"
